@@ -1,13 +1,19 @@
 from django.db import models
 
 # Create your models here.
-class Task(models.Model):
-    title = models.CharField('Задание', max_length=100)
-    description = models.TextField('Описание')
-    due_date = models.DateField('Сделать до', null=True, blank=True)
-    tags = models.CharField('Примечания', max_length=100, blank=True)
-    completed = models.BooleanField('Завершено', default=False)
-    creation_date = models.DateTimeField(auto_now_add=True)
+class Tag(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Тег', blank=True)
 
     def __str__(self):
-        return self.title
+        return self.name
+
+class Task(models.Model):
+    title = models.CharField(max_length=100,verbose_name='Задание')
+    description = models.TextField(verbose_name='Описание задания')
+    due_date = models.DateField(verbose_name='Срок выполнения', null=True, blank=True)
+    completed = models.BooleanField(default=False, verbose_name='Завершено')
+    creation_date = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField(Tag, verbose_name='Теги', blank=True)
+
+    def __str__(self):
+        return f'Задание {self.id}: {self.description}, Завершено: {self.completed}'
