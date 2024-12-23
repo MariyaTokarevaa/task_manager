@@ -12,7 +12,7 @@ class Task(models.Model):
     description = models.TextField(verbose_name='Описание задания')
     due_date = models.DateField(verbose_name='Срок выполнения', null=True, blank=True)
     completed = models.BooleanField(default=False, verbose_name='Завершено')
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     tags = models.ManyToManyField(Tag, verbose_name='Теги', blank=True)
 
     def __str__(self):
